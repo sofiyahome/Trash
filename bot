@@ -1,0 +1,46 @@
+import telebot
+from config import token
+
+bot = telebot.TeleBot(token)
+
+@bot.message_handler(commands=['start', 'help'])
+def send_help(message):
+    bot.reply_to(message, "Привет друг, я твой бот. Вот доступные команды: /plastic, /battery, /glass, /paper, /metal, /organic, /clothes, /electronics")
+
+@bot.message_handler(commands=['plastic'])
+def handle_plastic(message):
+    bot.reply_to(message, "Пластик нужно сдавать раздельно. Используйте контейнеры с пометкой 'Пластик'. Убедитесь, что он чистый и сухой.")
+
+@bot.message_handler(commands=['battery'])
+def handle_battery(message):
+    bot.reply_to(message, "Батарейки содержат вредные вещества. Сдавайте их в специальные контейнеры в магазинах или ТЦ.")
+
+@bot.message_handler(commands=['glass'])
+def handle_glass(message):
+    bot.reply_to(message, "Стекло можно перерабатывать многократно. Выбрасывайте его в контейнеры с маркировкой 'Стекло'.")
+
+@bot.message_handler(commands=['paper'])
+def handle_paper(message):
+    bot.reply_to(message, "Бумага должна быть чистой и сухой. Газеты, тетради, картон можно сдавать на переработку.")
+
+@bot.message_handler(commands=['metal'])
+def handle_metal(message):
+    bot.reply_to(message, "Металлические банки и предметы можно сдавать. Очистите от остатков пищи и жидкости.")
+
+@bot.message_handler(commands=['organic'])
+def handle_organic(message):
+    bot.reply_to(message, "Пищевые и органические отходы можно компостировать. Используйте отдельный контейнер или компостную яму.")
+
+@bot.message_handler(commands=['clothes'])
+def handle_clothes(message):
+    bot.reply_to(message, "Старую одежду можно сдать в пункты приёма или специальные контейнеры. Главное — чтобы она была чистой.")
+
+@bot.message_handler(commands=['electronics'])
+def handle_electronics(message):
+    bot.reply_to(message, "Старую технику нельзя выбрасывать в обычный мусор. Сдавайте её в специализированные пункты приёма.")
+
+@bot.message_handler(func=lambda message: message.text.startswith('/'))
+def handle_unknown(message):
+    bot.reply_to(message, "Неизвестная команда. Попробуйте /help.")
+
+bot.polling()
